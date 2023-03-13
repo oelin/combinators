@@ -1,6 +1,6 @@
 from typing import Optional
 from re import match
-from . parser import Parse, Parser, Success, Failure
+from parser import Parse, Parser, Success, Failure
 
 
 def string(string: str) -> Parse:
@@ -16,7 +16,6 @@ def string(string: str) -> Parse:
     )
 
 
-
 class Match(Parser):
     """
     Match(Parser)
@@ -27,14 +26,15 @@ class Match(Parser):
     def __init__(self, token: str):
         self.token = token
 
+
     def __call__(self, parse: Parser) -> Parse:
 
         lexeme = match(self.token, parse.string)
 
         if lexeme == None:
-            return Failure(parse)
+            return Failure()(parse)
 
-        return Success(Parse(
+        return Success()(Parse(
                 string = parse.string[lexeme.end() :],
                 result = lexeme.group(),
         ))
