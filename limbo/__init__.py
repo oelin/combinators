@@ -1,4 +1,4 @@
-from typing import Any, Callable, Tuple
+from typing import Any, Callable, Tuple, Optional
 from dataclasses import dataclass
 
 
@@ -76,7 +76,7 @@ class Nothing(Parser):
     """
     Nothing(Parser)
 
-    Parsers the the empty string (i.e. epsilon). Reduces to the
+    Parses the the empty string (i.e. epsilon). Reduces to the
     identity function so that `Nothing(parse) = parse`.
     """
 
@@ -86,6 +86,32 @@ class Nothing(Parser):
                 result = parse.result,
                 failed = parse.failed,
         )
+
+
+class Transform(Parser):
+    """
+    Transform(Parser)
+
+    Transforms the parse string according to a function
+    defined by inheriting classes. Returns a failure if the
+    transformation function returns `None`.
+    """
+
+    def __call__(parse: Parser) -> Parse:
+
+        transformed = self.transform(parse.string)
+
+        if transformed == None:
+            return failure(parse)
+
+        return success(Parse(
+                string = transformed,
+                result = parse.result,
+        ))
+
+
+    def transform(self, string: str) -> Optional[str]:
+        raise NotImplementedError()
 
 
 # Parser combinators.
