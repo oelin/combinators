@@ -1,4 +1,4 @@
-from typing import Any, Callable, Tuple, Optional
+from typing import Callable, Tuple, Optional
 from dataclasses import dataclass
 
 
@@ -13,8 +13,8 @@ class Parse:
     """
 
     string: str
-    result: Any
-    failed: bool = False
+    result: Optional = None
+    failed: Optional[bool] = False
 
 
 class Parser:
