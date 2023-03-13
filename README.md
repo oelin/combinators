@@ -10,7 +10,7 @@ A parser combinator library for Python.
 A parser for propositional logic.
 """
 
-from limbo imort Match, All, Any, Use
+from limbo import Match, All, Any, Use
 
 
 Literal = Match("[A-Z]")
