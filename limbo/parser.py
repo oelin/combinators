@@ -1,4 +1,4 @@
-from typing import Callable, Tuple, Optional
+from typing import Any, Callable, Tuple, Optional
 from dataclasses import dataclass
 
 
@@ -110,7 +110,7 @@ class All(ParserCombinator):
                 parse = parser(parse)
 
                 if parse.failed:
-                    return Failure()(parse)
+                    return Failure()(parse) # TODO: return result
 
                 result += (parse.result, )
 
