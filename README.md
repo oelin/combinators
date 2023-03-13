@@ -3,6 +3,8 @@
 A parser combinator library for Python.
 
 
+## Examples
+
 ```py
 """
 A parser for propositional logic.
