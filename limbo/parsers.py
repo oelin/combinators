@@ -4,7 +4,7 @@ Common parsers.
 
 from dataclasses import dataclass
 from re import match
-from parser import Parse, Parser
+from combinators import *
 
 
 @dataclass
