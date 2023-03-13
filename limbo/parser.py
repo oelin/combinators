@@ -144,6 +144,8 @@ class Any(ParserCombinator):
 
             return Failure()(parse)
 
+        return parser
+
 
 class Maybe(ParserCombinator):
     """
@@ -184,3 +186,5 @@ class Many(ParserCombinator):
                     ))
 
                 result += (parse.result, )
+
+        return parser
