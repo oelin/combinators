@@ -104,19 +104,23 @@ class All(ParserCombinator):
         assert len(parsers)
 
         def parser(parse: Parse) -> Parse:
-            result = tuple() # Stores enumerated results.
+
+            new_parse = Parse(
+                string = parse.string,
+                result = tuple(),
+            )
 
             for parser in parsers:
                 parse = parser(parse)
 
                 if parse.failed:
-                    return Failure()(parse) # TODO: return result
+                    return Failure()(new_parse)
 
-                result += (parse.result, )
+                new_parse.result += (parse.result, )
 
             return Success()(Parse(
                     string = parse.string,
-                    result = result,
+                    result = new_parse.result,
             ))
 
         return parser
