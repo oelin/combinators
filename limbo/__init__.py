@@ -156,4 +156,31 @@ class Maybe(ParserCombinator):
     def __call__(self, *parsers: Tuple[Parser]) -> Parser:
         assert len(parsers) == 1
 
-        return Any(parser, Nothing)
+        return Any(parsers[0], Nothing)
+
+
+class Many(ParserCombinator):
+    """
+    Many(ParserCombinator)
+
+    Returns the plural of a given parser. Keeps applying the
+    parser until it returns a failure. Returns the enuemrated
+    results from successful parses.
+    """
+
+    def __call__(self, *parsers: Tuple[Parser]) -> Parser:
+        assert len(parsers) == 1
+
+        def parser(parse: Parse) -> Parse:
+            result = tuple()
+
+            while True:
+                parse = parser[0](parse)
+
+                if parse.failed:
+                    return success(Parse(
+                            string = parse.string,
+                            result = result,
+                    ))
+
+                result += (parse.result, )
