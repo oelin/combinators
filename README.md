@@ -47,7 +47,7 @@ The parser can be called as a function. For example:
 
 Parse(
     string='', 
-    result=('(', 'A', '>', ('¬', 'B'), ')'), 
+    result=('(', 'A', '>', ('¬', 'B'), ')'), # This is the parse tree.
     failed=False
 )
 ```
