@@ -46,7 +46,7 @@ class Success(Parser):
     """
     Success(Parser)
 
-    Makes any Parse a success.
+    Makes any Parse a Success.
     """
 
     def __call__(parse: Parse) -> Parse:
@@ -61,7 +61,7 @@ class Failure(Parser):
     """
     Failure(Parser)
 
-    Makes any Parse a failure.
+    Makes any Parse a Failure.
     """
 
     def __call__(parse: Parse) -> Parse:
@@ -88,32 +88,6 @@ class Nothing(Parser):
         )
 
 
-class Transform(Parser):
-    """
-    Transform(Parser)
-
-    Transforms the parse string according to a function
-    defined by inheriting classes. Returns a failure if the
-    transformation function returns `None`.
-    """
-
-    def __call__(parse: Parser) -> Parse:
-
-        transformed = self.transform(parse.string)
-
-        if transformed == None:
-            return failure(parse)
-
-        return success(Parse(
-                string = transformed,
-                result = parse.result,
-        ))
-
-
-    def transform(self, string: str) -> Optional[str]:
-        raise NotImplementedError()
-
-
 # Parser combinators.
 
 class All(ParserCombinator):
@@ -121,9 +95,9 @@ class All(ParserCombinator):
     All(ParserCombinator)
 
     Returns the concatenation of several parsers. If all of the
-    parsers return a success, the concatenation returns a success
+    parsers return a Success, the concatenation returns a Success
     with their individual results enumerated into a list. If any of
-    the parsers return a failure, the concatenation does too.
+    the parsers return a Failure, the concatenation does too.
     """
 
     def __call__(self, *parsers: Tuple[Parser]) -> Parser:
@@ -136,11 +110,11 @@ class All(ParserCombinator):
                 parse = parser(parse)
 
                 if parse.failed:
-                    return failure(parse)
+                    return Failure(parse)
 
                 result += (parse.result, )
 
-            return success(Parse(
+            return Success(Parse(
                     string = parse.string,
                     result = result,
             ))
@@ -153,8 +127,8 @@ class Any(ParserCombinator):
     Any(ParserCombinator)
 
     Returns the alternation of several parsers. If any of the
-    parsers return a success, the concatenation returns the first
-    successful parse. Otherwise it returns a failure.
+    parsers return a Success, the concatenation returns the first
+    Successful parse. Otherwise it returns a Failure.
     """
 
     def __call__(self, *parsers: Tuple[Parser]) -> Parser:
@@ -166,9 +140,9 @@ class Any(ParserCombinator):
                 new_parse = parser(parse)
 
                 if not new_perse.failed:
-                    return success(new_parse)
+                    return Success(new_parse)
 
-            return failure(parse)
+            return Failure(parse)
 
 
 class Maybe(ParserCombinator):
@@ -190,8 +164,8 @@ class Many(ParserCombinator):
     Many(ParserCombinator)
 
     Returns the plural of a given parser. Keeps applying the
-    parser until it returns a failure. Returns the enuemrated
-    results from successful parses.
+    parser until it returns a Failure. Returns the enuemrated
+    results from Successful parses.
     """
 
     def __call__(self, *parsers: Tuple[Parser]) -> Parser:
@@ -204,7 +178,7 @@ class Many(ParserCombinator):
                 parse = parser[0](parse)
 
                 if parse.failed:
-                    return success(Parse(
+                    return Success(Parse(
                             string = parse.string,
                             result = result,
                     ))
