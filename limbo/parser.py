@@ -156,7 +156,7 @@ class Maybe(ParserCombinator):
     def __call__(self, *parsers: Tuple[Parser]) -> Parser:
         assert len(parsers) == 1
 
-        return Any(parsers[0], Nothing)
+        return Any()(parsers[0], Nothing())
 
 
 class Many(ParserCombinator):
