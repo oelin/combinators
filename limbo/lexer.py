@@ -3,19 +3,6 @@ from re import match
 from parser import Parse, Parser, Success, Failure
 
 
-def string(string: str) -> Parse:
-    """
-    string(string: str) -> Parse
-
-    Converts a Python string into a parse string.
-    """
-
-    return Parse(
-            string = string,
-            result = None,
-    )
-
-
 class Match(Parser):
     """
     Match(Parser)
