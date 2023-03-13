@@ -49,7 +49,7 @@ class Success(Parser):
     Makes any Parse a Success.
     """
 
-    def __call__(parse: Parse) -> Parse:
+    def __call__(self, parse: Parse) -> Parse:
         return Parse(
                 string = parse.string,
                 result = parse.result,
@@ -64,7 +64,7 @@ class Failure(Parser):
     Makes any Parse a Failure.
     """
 
-    def __call__(parse: Parse) -> Parse:
+    def __call__(self, parse: Parse) -> Parse:
         return Parse(
                 string = parse.string,
                 result = parse.result,
@@ -80,7 +80,7 @@ class Nothing(Parser):
     identity function so that `Nothing(parse) = parse`.
     """
 
-    def __call__(parse: Parse) -> Parse:
+    def __call__(self, parse: Parse) -> Parse:
         return Parse(
                 string = parse.string,
                 result = parse.result,
