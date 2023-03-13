@@ -110,11 +110,11 @@ class All(ParserCombinator):
                 parse = parser(parse)
 
                 if parse.failed:
-                    return Failure(parse)
+                    return Failure()(parse)
 
                 result += (parse.result, )
 
-            return Success(Parse(
+            return Success()(Parse(
                     string = parse.string,
                     result = result,
             ))
@@ -140,9 +140,9 @@ class Any(ParserCombinator):
                 new_parse = parser(parse)
 
                 if not new_perse.failed:
-                    return Success(new_parse)
+                    return Success()(new_parse)
 
-            return Failure(parse)
+            return Failure()(parse)
 
 
 class Maybe(ParserCombinator):
@@ -178,7 +178,7 @@ class Many(ParserCombinator):
                 parse = parser[0](parse)
 
                 if parse.failed:
-                    return Success(Parse(
+                    return Success()(Parse(
                             string = parse.string,
                             result = result,
                     ))
