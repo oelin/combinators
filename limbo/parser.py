@@ -139,7 +139,7 @@ class Any(ParserCombinator):
             for parser in parsers:
                 new_parse = parser(parse)
 
-                if not new_perse.failed:
+                if not new_parse.failed:
                     return Success()(new_parse)
 
             return Failure()(parse)
