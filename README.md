@@ -5,39 +5,49 @@ A parser combinator library for Python.
 
 ## Examples
 
+An example of a parser for propositional logic using Limbo.
+
 ```py
-"""
-A parser for propositional logic.
-"""
+>>> from limbo import Match, All, Any, Use
 
-from limbo import Match, All, Any, Use
+>>> Literal = Match("[A-Z]")
 
+>>> UnaryExpression = All()(
+        Match("¬"),
+        (lambda p: Expression(p)), # RHS
+    )
 
-Literal = Match("[A-Z]")
+>>> BinaryExpression = All()(
+        Match("\("),
+        (lambda p: Expression(p)), # LHS
+        Any()(
+            Match("v"),            # Disjunction
+            Match("\^"),           # Conjunction
+            Match(">"),            # Implication
+        ),
+        (lambda p: Expression(p)), # RHS
+        Match("\)"),
+    )
 
+>>> Expression = Any()(
+        Literal,
+        UnaryExpression,            
+        BinaryExpression,
+    )
+```
 
-UnaryExpression = All(
-    Match("¬"),
-    Use('Expression'),  # RHS
-)
+The parser can be called as a function. For example:
 
+```py
+>>> from limbo import Parse
 
-BinaryExpression = All(
-    Match("("),
-    Use('Expression')   # LHS
-    Any(
-      Match("v"),       # Disjunction
-      Match("^"),       # Conjunction
-      Match(">"),       # Implication
-    ),
-    Use('Expression'),  # RHS
-    Match(")"),
-)
+>>> input = Parse('(A>¬B)') # A implies not B.
 
+>>> Expression(input)
 
-Expression = Any(
-    Literal,
-    UnaryExpression,    # No need for `Use()` since the 
-    BinaryExpression,   # terms are already defined.
+Parse(
+    string='', 
+    result=('(', 'A', '>', ('¬', 'B'), ')'), 
+    failed=False
 )
 ```
