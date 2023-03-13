@@ -65,7 +65,7 @@ def And(p: Parser, q: Parser) -> Parser:
 
     class AndParser(Parser):
 
-        __call__ = lambda _, parse: (p0 := p(parse)) and (p1 := q(p0)) and (p1[0], (p0[1], p1[1]))
+        __call__ = lambda _, parse: (parse := p(parse)) and q(parse)
         __repr__ = lambda _: f'{p} {q}'
 
     return AndParser()
