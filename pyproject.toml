@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "combinators"
+version = "0.1.0"
+description = "Parser combinators for Python."
+authors = ["user <user@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
