@@ -8,17 +8,31 @@ Combinators is a tiny parser combinator library which allows you to construct so
 
 
 ```py
-# Parser for propositional logic.
+# A parser for propositional logic.
 
 from combinators import Match, Lambda
 
-Letter = Match("[A-Z]")
 
-Expression = Lambda(lambda p: Expression(p)) # Placeholder.
+# Terminals.
 
-Unary = Match("¬") & Expression
+LeftBrace = Match("\(")
 
-Bianry = Match("\(") & Expression & Match("[v\^>]") & Expression & Match("\)")
+RightBrace = Match("\)")
 
-Expression = Literal | Unary | Binary
+UnaryConnective = Match("¬")
+
+BinaryConnective = Match("[v\^>]")
+
+Literal = Match("[A-Z]")
+
+
+# Nonterminals.
+
+Expression = Lambda(lambda p: Expression(p)) # Lazy evaluation.
+
+UnaryExpression = UnaryConnective & Expression
+
+BianryExpression = LeftBrace & Expression & BinaryConnective & Expression & RightBrace
+
+Expression = Literal | UnaryExpression | BinaryExpression
 ```
