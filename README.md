@@ -32,7 +32,7 @@ Expression = Lambda(lambda p: Expression(p)) # Lazy evaluation.
 
 UnaryExpression = UnaryConnective & Expression
 
-BianryExpression = LeftBrace & Expression & BinaryConnective & Expression & RightBrace
+BinaryExpression = LeftBrace & Expression & BinaryConnective & Expression & RightBrace
 
 Expression = Literal | UnaryExpression | BinaryExpression
 ```
