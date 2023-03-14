@@ -10,7 +10,7 @@ Combinators is a tiny parser combinator library which allows you to construct so
 ```py
 # A parser for propositional logic.
 
-from combinators import Match, Foward
+from combinators import Match, Placeholder
 
 
 # Terminals.
@@ -28,11 +28,11 @@ Literal = Match("[A-Z]")
 
 # Nonterminals.
 
-Expression = Forward() # Forward reference.
+Expression = Placeholder()
 
 UnaryExpression = UnaryConnective + Expression
 
 BinaryExpression = LeftBrace + Expression + BinaryConnective + Expression + RightBrace
 
-Expression.is(Literal | UnaryExpression | BinaryExpression)
+Expression.set(Literal | UnaryExpression | BinaryExpression)
 ```
