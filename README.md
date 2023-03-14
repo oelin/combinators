@@ -34,5 +34,5 @@ UnaryExpression = UnaryConnective + Expression
 
 BinaryExpression = LeftBrace + Expression + BinaryConnective + Expression + RightBrace
 
-Expression.set(Literal | UnaryExpression | BinaryExpression)
+Expression.parser = Literal | UnaryExpression | BinaryExpression
 ```
