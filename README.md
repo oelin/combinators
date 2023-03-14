@@ -30,9 +30,9 @@ Literal = Match("[A-Z]")
 
 Expression = Lambda(lambda p: Expression(p)) # Lazy evaluation.
 
-UnaryExpression = UnaryConnective & Expression
+UnaryExpression = UnaryConnective + Expression
 
-BinaryExpression = LeftBrace & Expression & BinaryConnective & Expression & RightBrace
+BinaryExpression = LeftBrace + Expression + BinaryConnective + Expression + RightBrace
 
 Expression = Literal | UnaryExpression | BinaryExpression
 ```
